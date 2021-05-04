@@ -1,8 +1,8 @@
 # Ga144_editeur_cmd
 <p>tool to edit manage <b>Arrayforth </b> okadback.cf to forth  under windows</p>
-# easy to write some code in forth 
------------------------------------------------------------
-                     ArrayForth  GA144                      
+<p> easy to write some code in forth </p>
+<p> -----------------------------------------------------------</p>
+<p>                     ArrayForth  GA144       </p>               
                                                            
 <p>  1) Lancer ArrayForth   </p>                              
 <p>  2) Lancer editeur Notepad++ </p>                             
@@ -15,7 +15,7 @@
 <p>  8) Initialiser ArrayForth (sauvegarde okadback.cf)  </p>          
                                                            
 <p>  9) Quitter   </p>                                                            
------------------------------------------------------------
+<p> -----------------------------------------------------------</p>
 
 <p>commande : </p>
 
