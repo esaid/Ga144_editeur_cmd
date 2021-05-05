@@ -135,25 +135,26 @@ def Commandenotepad():
 
 def InitArrayForth():
     get_set_keyboard(keyboardUS)  # on passe la clavier en US
+    time.sleep(tlong)
+
     print("\n Initialisation ArrayForth")
-    chaine = " warm compile c "  #
+    chaine = " c 0 "  #
     CommandeArrayForth(chaine)
     time.sleep(tlong)
-    chaine = "0 !back "  # 0 !back sauvegarde 1440 blocs vers okadback.cf
+    chaine = "!back "  # 0 !back sauvegarde 1440 blocs vers okadback.cf
     CommandeArrayForth(chaine)
     print("\n  Sauvegarde okadback.cf: ")
 
 
 def MajArrayForth():
     get_set_keyboard(keyboardUS)  # on passe la clavier en US
-    chaine = "warm "  # 0 @back recharge  1440 blocs
+    chaine = " c 0 "  # 0 @back recharge  1440 blocs
     CommandeArrayForth(chaine)
     time.sleep(tlong)
-    chaine = "0 @back "  # 0 @back recharge  1440 blocs de okadback.cf
+    chaine = "@back "  # 0 @back recharge  1440 blocs de okadback.cf
     CommandeArrayForth(chaine)
     time.sleep(tlong)
-    chaine = "save "  # save okadwork.cf
-    CommandeArrayForth(chaine)
+
     print("\n  mise a jour okadback.cf ")
 
 
@@ -167,6 +168,7 @@ def Commande():
 def ConversionCF_toForth():
     os.chdir(cheminarrayforth)
     print("\n Conversion ColorForth vers Forth")
+    InitArrayForth()
     os.system(programme_cf2f)
     print("\n fin conversion")
     Commandenotepad()
