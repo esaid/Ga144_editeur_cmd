@@ -19,16 +19,19 @@
 # le repertoire de travail est "C:/GreenArrays/EVB002"
 
 
-import pyautogui as keyboard
-from detectkeyboardlayout import *
 import os
 import time
+
+import pyautogui as keyboard
 import win32gui
 from win32com import client
+
+from detectkeyboardlayout import *
 
 shell = client.Dispatch("WScript.Shell")
 cheminarrayforth = "C:/GreenArrays/EVB002"
 programme_arrayforth = "Okad.bat"
+
 '''
 C:\GreenArrays\EVB002>cf2f_f2cf.exe cf2f okadback.cf okad.f
 (' colorforth  to  forth ', ['okadback.cf', 'okad.f'])
@@ -40,7 +43,8 @@ programme_cf2f = 'cf2f_f2cf.exe cf2f okadback.cf okad.f'  # conversion cf to f
 programme_f2cf = 'cf2f_f2cf.exe f2cf okad.f okadback.cf'  # conversion f to cf
 programmeEditeur = "notepad++.exe okad.f"
 arrayforth = "colorForth"  # nom de la fenetre active du prg ArrayForth
-notepad = "*D:\GA144\ga144_arrayforth-master\Ga144_menu\ew 1.txt - Notepad++"
+
+notepad = "C:\GreenArrays\EVB002\okad.f - Notepad++"
 tsmall = 0.1  # 100ms
 tlong = 1
 os.chdir(cheminarrayforth)  # on va travailler dans le repertoire de Colorforth
@@ -59,12 +63,10 @@ def reactivewindow(hdnle):
 def sendMesg(message):
     keyboard.write(message, tsmall)
 
-
 def idColorForth():
     h = win32gui.FindWindow(None, arrayforth)  # recupere le handle de la fenetre arrayforth
-    print("id arrayforth", h)
+    # print("id arrayforth", h)
     return h
-
 
 def idnotepad():
     h = win32gui.FindWindow(None, notepad)  # recupere le handle de la fenetre notepad
@@ -100,8 +102,10 @@ def Editeur():
 
 
 def Bye():
-    chaine = " bye "  # bye
-    CommandeArrayForth(chaine)
+    if idColorForth():
+        chaine = " bye "  # bye
+        CommandeArrayForth(chaine)
+
     print("\n bye")
     quit()
 
@@ -112,7 +116,7 @@ def CommandeArrayForth(chaine):
         print("\n ArrayForth introuvable...")
     else:
         get_set_keyboard(keyboardUS)  # on passe la clavier en US
-        print("\n La fenetre colorForth a %s " % id, " suivant ")
+        # print("\n La fenetre colorForth a %s " % id, " suivant ")
         reactivewindow(id)  # rend actif la fenetre ColorForth
         time.sleep(tlong)
         sendMesg(chaine)
@@ -124,7 +128,7 @@ def Commandenotepad():
         print("\n notepad introuvable...")
     else:
         get_set_keyboard(keyboard_init)  # on passe la clavier different de US s il le faut
-        print("\n La fenetre notepad a %s " % id, " suivant ")
+        # print("\n La fenetre notepad a %s " % id, " suivant ")
         reactivewindow(id)  # rend actif la fenetre notepad
         time.sleep(tlong)
 
@@ -165,6 +169,7 @@ def ConversionCF_toForth():
     print("\n Conversion ColorForth vers Forth")
     os.system(programme_cf2f)
     print("\n fin conversion")
+    Commandenotepad()
 
 
 
@@ -173,7 +178,8 @@ def ConversionForth_toCF():
     print("\n Conversion  Forth vers ColorForth")
     os.system(programme_f2cf)
     print("\n fin conversion")
-    Commandenotepad()
+
+
 
 
 def erreur():
@@ -187,13 +193,20 @@ def get_set_keyboard(keyboard):
     else:
         key = (int(keyboard, 16))
         set_keyboard_language(key)
-        print("clavier  initial ", key)
+        print("configuration clavier   ", hex(key))
+
+
+def clear_terminal():
+    os.system("cls")
+
 
 
 # -------------------------------------------------------------------
 # ----------------------- Menu --------------------------------------
 # -------------------------------------------------------------------
 def menu():
+
+
     print("-------------------------------------------------------------")
     print("|                     ArrayForth GA144                      |")
     print("|  0) Commande a envoyer notepad                            |")
@@ -218,10 +231,13 @@ def menu():
               '9': Bye
               }
     option.get(choix, erreur)()
+    clear_terminal()
 
 # on vient sauvegarder le type de clavier , et on le passe en US
-keyboardUS = '0x409'
+keyboardUS = '0x409' # keyboard US
 keyboard_init = get_keyboard_language()
+print("clavier  initial ", keyboard_init)
 get_set_keyboard(keyboardUS)
+
 while True:
     menu()
